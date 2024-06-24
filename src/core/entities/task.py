@@ -2,6 +2,6 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Task:
+class TaskDomain:
     id: int
     title: str
