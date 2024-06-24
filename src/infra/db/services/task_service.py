@@ -1,4 +1,5 @@
 from infra.db.models import Task
+from core.entities.task import TaskDomain
 from core.abc_repositories.task_repo_abc import TaskRepoABC
 from core.abc_repositories.dto.task_dto import TaskCreateDto
 from core.abc_service.task_service_abc import TaskServiceABC
@@ -19,11 +20,12 @@ class TaskService(TaskServiceABC):
         await self.repo.create_task(task)
         await self.session.commit()
 
-    async def delete_task(self):
+    async def delete_task(self, id: int):
         pass
 
-    async def find_task(self):
-        pass
+    async def find_task(self, **filter_by) -> TaskDomain:
+        task = await self.repo.find_task(**filter_by)
+        return task
 
     async def update_task(self):
         pass

@@ -11,7 +11,7 @@ class TaskRepoABC(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def find_task(id: int) -> TaskDomain:
+    async def find_task(**args) -> TaskDomain:
         raise NotImplementedError
 
     @abstractmethod

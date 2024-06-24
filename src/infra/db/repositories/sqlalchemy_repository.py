@@ -1,4 +1,4 @@
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.abc_repositories.task_repo_abc import TaskRepoABC
@@ -18,8 +18,11 @@ class SqlAlchemyRepository(TaskRepoABC):
     async def delete_task(self):
         pass
 
-    async def find_task(self):
-        pass
+    async def find_task(self, **filter_by):
+        query = select(self.model).filter_by(**filter_by)
+        result = await self.session.execute(query)
+        task = result.scalar()
+        return task
 
     async def update_task(self):
         pass
