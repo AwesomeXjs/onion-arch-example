@@ -16,3 +16,9 @@ db_helper = DatabaseHelper(
     url=settings.db_url,
     echo=True,
 )
+
+
+async def session_depends():
+    async with db_helper.session_factory() as session:
+        yield session
+        await session.close()

@@ -1,18 +1,13 @@
 from typing import Annotated
 
 from fastapi import Depends
-from infra.db.config.db_helper import db_helper
+from sqlalchemy.ext.asyncio import AsyncSession
+from infra.db.config.db_helper import session_depends
 from core.abc_service.task_service_abc import TaskServiceABC
 from infra.db.services.task_service import TaskRepository, TaskService
 
 
-async def session_depends():
-    async with db_helper.session_factory() as session:
-        yield session
-        await session.close()
-
-
-def task_service(session=Depends(session_depends)):
+def task_service(session: Annotated[AsyncSession, Depends(session_depends)]):
     return TaskService(task_repo=TaskRepository, session=session)
 
 

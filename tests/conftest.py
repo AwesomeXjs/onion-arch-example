@@ -7,8 +7,7 @@ import pytest
 from src.main import create_app
 from src.infra.db.models import Base
 from src.infra.db.config import settings
-from src.infra.dependencies import session_depends
-from src.infra.db.config.db_helper import DatabaseHelper
+from src.infra.db.config.db_helper import DatabaseHelper, session_depends
 
 
 TEST_DB_URL = settings.db_url_test

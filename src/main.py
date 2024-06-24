@@ -1,4 +1,3 @@
-import json
 from fastapi import FastAPI
 
 from infra.controllers.api_v1 import router as v1_router
