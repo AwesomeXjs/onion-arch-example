@@ -3,11 +3,12 @@ from typing import AsyncGenerator
 from httpx import ASGITransport, AsyncClient
 
 import pytest
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.main import create_app
-from src.infra.db.models import Base
-from src.infra.db.config import settings
-from src.infra.db.config.db_helper import DatabaseHelper, session_depends
+from main import create_app
+from infra.db.models import Base
+from infra.db.config import settings
+from infra.db.config.db_helper import DatabaseHelper, session_depends
 
 
 TEST_DB_URL = settings.db_url_test
@@ -30,7 +31,7 @@ async def create_tables():
     #     await conn.run_sync(Base.metadata.drop_all)
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 async def ac() -> AsyncGenerator[AsyncClient, None]:
     app: FastAPI = create_app()
     app.dependency_overrides[session_depends] = override_session_depends

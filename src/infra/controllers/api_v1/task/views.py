@@ -14,14 +14,16 @@ async def create_task(
     task: TaskSchemaCreate,
     task_service: Annotated[TaskServiceABC, Depends(task_service)],
 ):
-    try:
-        await task_service.create_task(task=task)
-        return {"status": "ok", "data": f"Таска '{task.title}' создана"}
-    except:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Такая таска уже существует",
-        )
+    # try:
+    return await task_service.create_task(task=task)
+    # return {"status": "ok", "data": f"Таска '{task.title}' создана"}
+
+
+# except:
+# raise HTTPException(
+# status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+# detail="Такая таска уже существует",
+# )
 
 
 @router.get("/{id}")
